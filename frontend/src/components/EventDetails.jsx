@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchEventSummary, fetchPeople } from '../api';
 
-function EventDetails({ communityId, onSelectPerson }) { // onUpdateLastCheckinPerson REMOVIDA
+function EventDetails({ communityId, onSelectPerson }) { 
     const [summary, setSummary] = useState(null);
     const [people, setPeople] = useState([]);
     const [loadingSummary, setLoadingSummary] = useState(false);
@@ -20,7 +20,6 @@ function EventDetails({ communityId, onSelectPerson }) { // onUpdateLastCheckinP
                     const data = await fetchEventSummary(communityId);
                     setSummary(data);
                     setErrorSummary(null);
-                    // CHAMADA DE onUpdateLastCheckinPerson REMOVIDA AQUI
                 } catch (err) {
                     setErrorSummary(err.message);
                 } finally {
@@ -32,7 +31,6 @@ function EventDetails({ communityId, onSelectPerson }) { // onUpdateLastCheckinP
             intervalId = setInterval(getSummary, 2000);
         } else {
             setSummary(null);
-            // LIMPEZA DE onUpdateLastCheckinPerson REMOVIDA AQUI
         }
 
         return () => {

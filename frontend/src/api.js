@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://localhost:7277/api'; 
+const API_BASE_URL = 'http://localhost:5203/api'; 
 
 export const fetchCommunities = async () => {
     const response = await fetch(`${API_BASE_URL}/Event/communities`);
