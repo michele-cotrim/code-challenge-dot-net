@@ -1,10 +1,6 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using QuaveChallenge.API.Models;
+using System.Text.Json;
 
 namespace QuaveChallenge.API.Data.Seeding
 {

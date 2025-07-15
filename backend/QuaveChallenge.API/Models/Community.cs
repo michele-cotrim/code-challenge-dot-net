@@ -1,5 +1,3 @@
-using System;
-
 namespace QuaveChallenge.API.Models
 {
     public class Community

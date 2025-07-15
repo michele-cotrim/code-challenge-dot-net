@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using QuaveChallenge.API.Data;
 using QuaveChallenge.API.Services;
 using QuaveChallenge.API.Data.Seeding;
+using AutoMapper;
+using QuaveChallenge.API.Services.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Add Services
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddMapper();
 
 // Add Seeder
 builder.Services.AddScoped<IDataSeeder, InitialDataSeeder>();

@@ -1,15 +1,18 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using QuaveChallenge.API.Contracts;
 using QuaveChallenge.API.Models;
 
 namespace QuaveChallenge.API.Services
 {
     public interface IEventService
     {
-        Task<IEnumerable<Community>> GetCommunitiesAsync();
-        Task<IEnumerable<Person>> GetPeopleByEventAsync(int communityId);
-        Task<Person> CheckInPersonAsync(int personId);
-        Task<Person> CheckOutPersonAsync(int personId);
-        Task<EventSummary> GetEventSummaryAsync(int communityId);
+        Task<IEnumerable<CommunityResponse>> GetCommunitiesAsync();
+        Task<IEnumerable<PersonResponse>> GetPeopleByEventAsync(int communityId);
+        Task CheckInPersonAsync(int personId, int communityId);
+        Task CheckOutPersonAsync(int personId, int communityId);
+        Task<bool> AllowCheckOutPersonAsync(int personId, int communityId);
+        Task<bool> AllowCheckInPersonAsync(int personId, int communityId);
+
+        Task<EventSummaryResponse> GetEventSummaryAsync(int communityId);
     }
 } 

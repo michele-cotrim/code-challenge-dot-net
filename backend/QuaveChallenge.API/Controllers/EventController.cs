@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using QuaveChallenge.API.Contracts;
+using QuaveChallenge.API.Services;
 
 namespace QuaveChallenge.API.Controllers
 {
@@ -6,39 +8,73 @@ namespace QuaveChallenge.API.Controllers
     [Route("api/[controller]")]
     public class EventController : ControllerBase
     {
-        [HttpGet("communities")]
-        public IActionResult GetCommunities()
+        public readonly IEventService _eventService;
+
+        public EventController(IEventService eventService)
         {
-            // TODO: Implement get communities
-            return Ok();
+            _eventService = eventService;
+        }
+
+        [HttpGet("communities")]
+        [ProducesResponseType(typeof(CommunityResponse[]), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCommunities()
+        {
+            var response = await _eventService.GetCommunitiesAsync();
+            return Ok(response);
         }
 
         [HttpGet("people/{communityId}")]
-        public IActionResult GetPeople(int communityId)
+        [ProducesResponseType(typeof(PersonResponse[]), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPeople(int communityId)
         {
-            // TODO: Implement get people by community
+            var response = await _eventService.GetPeopleByEventAsync(communityId);
+            return Ok(response);
+        }
+
+        [HttpPost("check-in/{personId}/{communityId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CheckIn(int personId, int communityId)
+
+        {
+            await _eventService.CheckInPersonAsync(personId, communityId);
+
+            return Ok();
+            
+        }
+
+        [HttpPost("check-out/{personId}/{communityId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public IActionResult CheckOut(int personId, int communityId)
+        {
+            _eventService.CheckOutPersonAsync(personId, communityId).Wait();
             return Ok();
         }
 
-        [HttpPost("check-in/{personId}")]
-        public IActionResult CheckIn(int personId)
+        [HttpGet("allow/check-out/{personId}/{communityId}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> AbleToCheckOut(int personId, int communityId)
         {
-            // TODO: Implement check-in
-            return Ok();
+            var response = await _eventService.AllowCheckOutPersonAsync(personId, communityId);
+            return Ok(response);
         }
 
-        [HttpPost("check-out/{personId}")]
-        public IActionResult CheckOut(int personId)
+        [HttpGet("allow/check-in/{personId}/{communityId}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> AbleToCheckin(int personId, int communityId)
         {
-            // TODO: Implement check-out
-            return Ok();
+            var response = await _eventService.AllowCheckInPersonAsync(personId, communityId);
+            return Ok(response);
         }
 
         [HttpGet("summary/{communityId}")]
-        public IActionResult GetSummary(int communityId)
+        [ProducesResponseType(typeof(EventSummaryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetSummary(int communityId)
         {
-            // TODO: Implement get summary
-            return Ok();
+            var response = await _eventService.GetEventSummaryAsync(communityId);
+            return Ok(response);
         }
     }
 } 
