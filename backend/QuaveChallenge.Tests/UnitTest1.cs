@@ -1,4 +1,6 @@
-﻿namespace QuaveChallenge.Tests;
+﻿using Xunit;
+
+namespace QuaveChallenge.Tests;
 
 public class UnitTest1
 {
